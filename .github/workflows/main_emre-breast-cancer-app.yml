@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'emre-breast-cancer-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DA2B22671F094ED5991D2DB1841F6894 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CF2108F35B74DE7B7A79B67F80CB1D2 }}
