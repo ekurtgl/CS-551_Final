@@ -23,7 +23,7 @@ def predict():
 
     model = pickle.load(open("knn.sav", "rb"))
 
-    data = [[inputQuery1, inputQuery2, inputQuery3, inputQuery4, inputQuery5]]
+    data = [[float(inputQuery1), float(inputQuery2), float(inputQuery3), float(inputQuery4), float(inputQuery5)]]
     new_df = pd.DataFrame(data, columns=['concavity_worst', 'smoothness_se', 'texture_mean', 'concave points_worst',
                                          'compactness_mean'])
     new_df['concavity_worst'] /= 1.252
@@ -33,15 +33,14 @@ def predict():
     new_df['compactness_mean'] /= 0.3454
 
     single = model.predict(new_df)
+    probability = model.predict_proba(new_df)[:, 1][0]
 
     if single == 1:
-        probability = model.predict_proba(new_df)[:, 1]
         o1 = "The patient is diagnosed with Breast Cancer"
         o2 = "Confidence: {}".format(probability * 100)
     else:
-        probability = model.predict_proba(new_df)[:, 0]
         o1 = "The patient is not diagnosed with Breast Cancer"
-        o2 = "Confidence: {}".format(probability * 100)
+        o2 = "Confidence: {}".format(100 - (probability * 100))
 
     return render_template('home.html', output1=o1, output2=o2, query1=request.form['query1'],
                            query2=request.form['query2'], query3=request.form['query3'], query4=request.form['query4'],
